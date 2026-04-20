@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # Online Banking System V2.0.2
 
 This is an Online Banking Concept created using Django Web Framework.
@@ -99,3 +100,7 @@ celery -A banking_system beat -l info
 ![alt text](https://i.imgur.com/FvgmEJL.png)
 #
 ![alt text](https://i.imgur.com/aWzj44Y.png)
+=======
+# Bank_Management_System
+SE project
+>>>>>>> 4b5d9696a71094644b6d1f4918d35870735fb697
