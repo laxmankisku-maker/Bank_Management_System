@@ -1,0 +1,134 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Transaction Report | Banking System{% endblock %}
+
+{% block head_extra %}
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/jquery/latest/jquery.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <style>
+        .daterangepicker {
+            background: #1a1a1a;
+            border: 1px solid rgba(255,255,255,0.1);
+            color: white;
+        }
+        .daterangepicker .calendar-table {
+            background: #1a1a1a;
+            border: none;
+        }
+        .daterangepicker td.available:hover, .daterangepicker th.available:hover {
+            background: rgba(16, 185, 129, 0.2);
+            color: white;
+        }
+        .daterangepicker td.active, .daterangepicker td.active:hover {
+            background: #10b981;
+        }
+        .daterangepicker .drp-buttons {
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        .daterangepicker .drp-selected {
+            color: #9ca3af;
+        }
+        .daterangepicker .cancelBtn {
+            color: #9ca3af;
+        }
+    </style>
+{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-8">
+    <div class="glass-card-dark p-8 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-white/10">
+            <div>
+                <h1 class="text-3xl font-display font-bold text-white mb-2">Dashboard</h1>
+                <p class="text-gray-400">Detailed Transaction History & Reporting</p>
+            </div>
+            <div class="mt-6 md:mt-0 text-right">
+                <p class="text-xs font-medium text-gray-500 uppercase tracking-wider mb-1">Current Balance</p>
+                <h2 class="text-3xl font-bold text-white balance-display-dark">₹ {{ account.balance }}</h2>
+            </div>
+        </div>
+
+        <!-- Filter Section -->
+        <form method="get" class="mb-8 flex flex-wrap items-end gap-4">
+            <div class="flex-grow">
+                <label class="block text-xs font-medium text-gray-400 uppercase mb-2">Filter by Date Range</label>
+                <div class="relative h-14 bg-white/5 border border-white/10 rounded-xl flex items-center px-4 hover:border-emerald-500/50 focus-within:border-emerald-500 transition duration-200">
+                    <input type="search" name="daterange" id="search" placeholder="Select dates..." value="{{ request.GET.daterange }}" 
+                           class="bg-transparent w-full outline-none font-medium text-white appearance-none placeholder-gray-500" />
+                    <i data-lucide="calendar" class="w-5 h-5 text-gray-500"></i>
+                </div>
+            </div>
+            <button type="submit" class="btn-glow-green h-14 px-8 flex items-center justify-center gap-2">
+                <i data-lucide="filter" class="w-5 h-5"></i>
+                Filter
+            </button>
+        </form>
+
+        <!-- Transaction Table -->
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-left">
+                <thead class="bg-white/5 text-emerald-400 uppercase text-xs font-bold tracking-widest">
+                    <tr>
+                        <th class="px-6 py-5">Transaction Type</th>
+                        <th class="px-6 py-5">Timestamp</th>
+                        <th class="px-6 py-5 text-center">Amount</th>
+                        <th class="px-6 py-5 text-right">Account Balance</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    {% for transaction in object_list %}
+                    <tr class="hover:bg-white/5 transition duration-150">
+                        <td class="px-6 py-5">
+                            <span class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold uppercase 
+                                {% if transaction.transaction_type == 1 %}bg-emerald-500/20 text-emerald-400
+                                {% elif transaction.transaction_type == 2 %}bg-red-500/20 text-red-400
+                                {% else %}bg-blue-500/20 text-blue-400{% endif %}">
+                                <i data-lucide="{% if transaction.transaction_type == 1 %}arrow-down-left{% elif transaction.transaction_type == 2 %}arrow-up-right{% else %}refresh-cw{% endif %}" class="w-3 h-3"></i>
+                                {{ transaction.get_transaction_type_display }}
+                            </span>
+                        </td>
+                        <td class="px-6 py-5 text-sm text-gray-400">{{ transaction.timestamp }}</td>
+                        <td class="px-6 py-5 text-center font-bold {% if transaction.transaction_type == 1 %}text-emerald-400{% elif transaction.transaction_type == 2 %}text-red-400{% else %}text-white{% endif %}">
+                            {% if transaction.transaction_type == 1 %}+{% elif transaction.transaction_type == 2 %}-{% endif %}₹ {{ transaction.amount }}
+                        </td>
+                        <td class="px-6 py-5 text-right font-bold text-white">₹ {{ transaction.balance_after_transaction }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="4" class="px-6 py-12 text-center text-gray-500">
+                            <i data-lucide="receipt" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
+                            <p>No transactions found for the selected criteria.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+                <tfoot class="bg-white/5">
+                    <tr>
+                        <td colspan="3" class="px-6 py-5 text-right font-semibold uppercase text-xs tracking-wider text-gray-400">Closing Balance</td>
+                        <td class="px-6 py-5 text-right font-bold text-emerald-400 text-xl">₹ {{ account.balance }}</td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block footer_extra %}
+    <script type="text/javascript">
+        $(function () {
+            $('input[name="daterange"]').daterangepicker({
+                autoUpdateInput: false,
+                locale: { cancelLabel: "Clear" },
+            });
+            $('input[name="daterange"]').on("apply.daterangepicker", function (ev, picker) {
+                $(this).val(picker.startDate.format("YYYY-MM-DD") + " - " + picker.endDate.format("YYYY-MM-DD"));
+            });
+            $('input[name="daterange"]').on("cancel.daterangepicker", function (ev, picker) {
+                $(this).val("");
+            });
+        });
+    </script>
+{% endblock %}

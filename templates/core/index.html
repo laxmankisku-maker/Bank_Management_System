@@ -1,0 +1,155 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Banking System - Modern Banking Solutions{% endblock %}
+
+{% block content %}
+<div class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+    <!-- Main Content -->
+    <div class="relative z-10 text-center px-6 max-w-5xl mx-auto page-enter">
+        <!-- Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-500/10 border border-emerald-500/20 mb-8">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            <span class="text-sm font-semibold text-emerald-400">Trusted by 50,000+ Customers</span>
+        </div>
+
+        <!-- Main Heading -->
+        <h1 class="text-5xl md:text-7xl lg:text-8xl font-display font-bold mb-6 leading-tight">
+            <span class="text-gradient-green">Banking</span>
+            <br>
+            <span class="text-white">Reimagined</span>
+        </h1>
+        
+        <!-- Subtitle -->
+        <p class="text-xl md:text-2xl text-gray-400 mb-12 max-w-2xl mx-auto leading-relaxed">
+            Experience secure, seamless, and intelligent financial management for the modern world.
+        </p>
+
+        <!-- CTA Buttons -->
+        <div class="flex flex-col sm:flex-row justify-center gap-4 mb-16">
+            <a href="{% url 'accounts:user_login' %}" class="btn-secondary-dark px-8 py-4 text-lg flex items-center justify-center gap-2">
+                <i data-lucide="log-in" class="w-5 h-5"></i>
+                <span>Sign In</span>
+            </a>
+            
+            <a href="{% url 'accounts:user_registration' %}" class="btn-glow-green px-8 py-4 text-lg flex items-center justify-center gap-2 group">
+                <span>Create Account</span>
+                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+            </a>
+        </div>
+
+        <!-- Trust Badges -->
+        <div class="flex flex-wrap justify-center items-center gap-8 text-gray-500">
+            <div class="flex items-center gap-2">
+                <i data-lucide="lock" class="w-5 h-5 text-emerald-500"></i>
+                <span class="text-sm font-medium">Bank-grade Security</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i data-lucide="zap" class="w-5 h-5 text-emerald-500"></i>
+                <span class="text-sm font-medium">Instant Transfers</span>
+            </div>
+            <div class="flex items-center gap-2">
+                <i data-lucide="headphones" class="w-5 h-5 text-emerald-500"></i>
+                <span class="text-sm font-medium">24/7 Support</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="py-24 px-4 sm:px-6 lg:px-8 relative">
+    <div class="max-w-7xl mx-auto">
+        <div class="text-center mb-16">
+            <h2 class="text-3xl md:text-4xl font-display font-bold text-white mb-4">Why Choose Us?</h2>
+            <p class="text-gray-400 max-w-2xl mx-auto">Experience banking that puts you first with cutting-edge technology and unparalleled security.</p>
+        </div>
+
+        <div class="grid md:grid-cols-3 gap-8">
+            <div class="glass-card-dark p-8 text-center group">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-emerald-400 to-emerald-600 flex items-center justify-center shadow-lg shadow-emerald-500/30 group-hover:scale-110 transition-transform">
+                    <i data-lucide="shield" class="w-8 h-8 text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Secure Banking</h3>
+                <p class="text-gray-400">256-bit encryption and multi-factor authentication keep your assets safe.</p>
+            </div>
+
+            <div class="glass-card-dark p-8 text-center group">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-blue-400 to-blue-600 flex items-center justify-center shadow-lg shadow-blue-500/30 group-hover:scale-110 transition-transform">
+                    <i data-lucide="smartphone" class="w-8 h-8 text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Mobile First</h3>
+                <p class="text-gray-400">Bank anywhere, anytime with our award-winning mobile experience.</p>
+            </div>
+
+            <div class="glass-card-dark p-8 text-center group">
+                <div class="w-16 h-16 mx-auto mb-6 rounded-2xl bg-gradient-to-br from-purple-400 to-purple-600 flex items-center justify-center shadow-lg shadow-purple-500/30 group-hover:scale-110 transition-transform">
+                    <i data-lucide="clock" class="w-8 h-8 text-white"></i>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">24/7 Access</h3>
+                <p class="text-gray-400">Round-the-clock banking services with real-time transaction processing.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Stats Section -->
+<div class="py-20 px-4 sm:px-6 lg:px-8 relative overflow-hidden">
+    <div class="absolute inset-0 bg-gradient-to-br from-emerald-900/20 to-blue-900/20"></div>
+    <div class="max-w-7xl mx-auto relative z-10">
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+            <div>
+                <p class="text-4xl md:text-5xl font-bold mb-2 text-gradient-green counter" data-target="50000">0</p>
+                <p class="text-gray-400">Active Users</p>
+            </div>
+            <div>
+                <p class="text-4xl md:text-5xl font-bold mb-2 text-gradient-green counter" data-target="1000000">0</p>
+                <p class="text-gray-400">Transactions</p>
+            </div>
+            <div>
+                <p class="text-4xl md:text-5xl font-bold mb-2 text-gradient-green">99.9%</p>
+                <p class="text-gray-400">Uptime</p>
+            </div>
+            <div>
+                <p class="text-4xl md:text-5xl font-bold mb-2 text-gradient-green">24/7</p>
+                <p class="text-gray-400">Hour Support</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    lucide.createIcons();
+    
+    // Counter animation
+    const animateCounter = (element, target, duration = 2000) => {
+        let startTimestamp = null;
+        const step = (timestamp) => {
+            if (!startTimestamp) startTimestamp = timestamp;
+            const progress = Math.min((timestamp - startTimestamp) / duration, 1);
+            const value = Math.floor(progress * target);
+            element.textContent = value.toLocaleString() + '+';
+            if (progress < 1) {
+                window.requestAnimationFrame(step);
+            } else {
+                element.textContent = target.toLocaleString() + '+';
+            }
+        };
+        window.requestAnimationFrame(step);
+    };
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const counters = entry.target.querySelectorAll('.counter');
+                counters.forEach(counter => {
+                    const target = parseInt(counter.getAttribute('data-target'));
+                    animateCounter(counter, target);
+                });
+                observer.unobserve(entry.target);
+            }
+        });
+    }, { threshold: 0.5 });
+
+    const statsSection = document.querySelector('.py-20');
+    if (statsSection) observer.observe(statsSection);
+</script>
+{% endblock %}

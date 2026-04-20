@@ -1,0 +1,13 @@
+{% for message in messages %}
+<div class="bg-emerald-500/10 border-l-4 border-emerald-500 rounded-r-lg text-emerald-400 px-4 py-3 shadow-lg mt-2 backdrop-blur-sm" role="alert">
+    <div class="flex items-center">
+        <div class="flex-shrink-0">
+            <i data-lucide="check-circle" class="h-6 w-6 text-emerald-500 mr-3"></i>
+        </div>
+        <div>
+            <p class="font-semibold text-white">Success!</p>
+            <p class="text-sm text-gray-400">{{ message }}</p>
+        </div>
+    </div>
+</div>
+{% endfor %}

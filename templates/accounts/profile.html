@@ -1,0 +1,116 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Update Record | Banking System{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[80vh] px-4 py-10">
+    <div class="glass-card-dark w-full max-w-4xl p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500"></div>
+        
+        <div class="mb-10 text-center border-b border-white/10 pb-8">
+            <h1 class="text-3xl font-display font-bold text-white mb-2">
+                {% if is_cashier_view %}Cashier: Update Account{% else %}Account Management{% endif %}
+            </h1>
+            
+            <div class="flex flex-col md:flex-row justify-center gap-6 mt-6 mb-8">
+                <div class="glass-card-dark px-8 py-4 border-emerald-500/30">
+                    <p class="text-[10px] uppercase font-bold tracking-widest text-emerald-400 mb-1">Account Number</p>
+                    <p class="text-2xl font-bold text-white">{{ request.user.account.account_no }}</p>
+                </div>
+                <div class="glass-card-dark px-8 py-4">
+                    <p class="text-[10px] uppercase font-bold tracking-widest text-gray-400 mb-1">IFSC Code</p>
+                    <p class="text-2xl font-bold text-white">{{ request.user.account.ifsc_code }}</p>
+                </div>
+            </div>
+
+            <p class="text-gray-400">
+                {% if is_cashier_view %}Updating record for {{ customer.get_full_name }}{% else %}Manage your personal and security details.{% endif %}
+            </p>
+        </div>
+        
+        <form method="post" class="space-y-8">
+            {% csrf_token %}
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+                <!-- Personal Info -->
+                <div class="space-y-5">
+                    <h2 class="text-sm font-semibold text-emerald-400 uppercase tracking-wider border-b border-white/10 pb-2 flex items-center gap-2">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        Personal Details
+                    </h2>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">First Name</label>
+                        {{ form.first_name }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Last Name</label>
+                        {{ form.last_name }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Email Address</label>
+                        {{ form.email }}
+                    </div>
+                </div>
+
+                <!-- Address -->
+                <div class="space-y-5">
+                    <h2 class="text-sm font-semibold text-emerald-400 uppercase tracking-wider border-b border-white/10 pb-2 flex items-center gap-2">
+                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                        KYC & Address
+                    </h2>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Street Address</label>
+                        {{ address_form.street_address }}
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">City</label>
+                            {{ address_form.city }}
+                        </div>
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Postal Code</label>
+                            {{ address_form.postal_code }}
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Country</label>
+                        {{ address_form.country }}
+                    </div>
+                </div>
+            </div>
+
+            <div class="pt-6 flex flex-col md:flex-row gap-4">
+                <button type="submit" class="btn-glow-green flex-1 py-4 text-lg flex items-center justify-center gap-2">
+                    <i data-lucide="save" class="w-5 h-5"></i>
+                    Save Record Updates
+                </button>
+                {% if is_cashier_view %}
+                <a href="{% url 'accounts:cashier_dashboard' %}" class="btn-secondary-dark py-4 px-10 text-center">
+                    Back to Dashboard
+                </a>
+                {% endif %}
+            </div>
+        </form>
+    </div>
+</div>
+
+<style>
+    input {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    input:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+    }
+</style>
+{% endblock %}

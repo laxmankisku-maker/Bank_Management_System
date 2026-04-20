@@ -1,0 +1,423 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" class="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="Modern Banking System" />
+        <meta name="author" content="Maksudul Haque" />
+        <title>
+            {% block head_title %}Banking System{% endblock %}
+        </title>
+        
+        <!-- Tailwind CSS -->
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                darkMode: 'class',
+                theme: {
+                    extend: {
+                        colors: {
+                            dark: {
+                                900: '#0f0f0f',
+                                800: '#1a1a1a',
+                                700: '#262626',
+                                600: '#404040',
+                            },
+                            accent: {
+                                green: '#10b981',
+                                emerald: '#059669',
+                                teal: '#14b8a6',
+                            }
+                        }
+                    }
+                }
+            }
+        </script>
+        
+        <!-- Google Fonts -->
+        <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+        
+        <!-- Lucide Icons -->
+        <script src="https://unpkg.com/lucide@latest"></script>
+        
+        <style>
+            :root {
+                --bg-primary: #0f0f0f;
+                --bg-secondary: #1a1a1a;
+                --bg-card: rgba(26, 26, 26, 0.8);
+                --text-primary: #ffffff;
+                --text-secondary: #a3a3a3;
+                --accent-green: #10b981;
+                --accent-emerald: #059669;
+                --border-color: rgba(255, 255, 255, 0.1);
+            }
+            
+            * {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }
+            
+            body {
+                font-family: 'Inter', sans-serif;
+                background-color: var(--bg-primary);
+                background-image: 
+                    radial-gradient(ellipse at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%),
+                    radial-gradient(ellipse at 80% 20%, rgba(5, 150, 105, 0.1) 0%, transparent 50%),
+                    radial-gradient(ellipse at 40% 40%, rgba(20, 184, 166, 0.05) 0%, transparent 50%);
+                background-attachment: fixed;
+                color: var(--text-primary);
+                min-height: 100vh;
+                overflow-x: hidden;
+            }
+            
+            h1, h2, h3, h4, .font-display {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 700;
+            }
+            
+            /* Animated Background Orbs */
+            .bg-orb {
+                position: fixed;
+                border-radius: 50%;
+                filter: blur(100px);
+                opacity: 0.3;
+                z-index: -1;
+                animation: orbFloat 20s ease-in-out infinite;
+            }
+            
+            .orb-1 {
+                width: 400px;
+                height: 400px;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                top: -200px;
+                left: -100px;
+                animation-delay: 0s;
+            }
+            
+            .orb-2 {
+                width: 300px;
+                height: 300px;
+                background: linear-gradient(135deg, #14b8a6 0%, #0d9488 100%);
+                bottom: -100px;
+                right: -50px;
+                animation-delay: -5s;
+            }
+            
+            .orb-3 {
+                width: 250px;
+                height: 250px;
+                background: linear-gradient(135deg, #34d399 0%, #10b981 100%);
+                top: 50%;
+                left: 50%;
+                animation-delay: -10s;
+            }
+            
+            @keyframes orbFloat {
+                0%, 100% { transform: translate(0, 0) scale(1); }
+                33% { transform: translate(30px, -30px) scale(1.1); }
+                66% { transform: translate(-20px, 20px) scale(0.9); }
+            }
+            
+            /* Glassmorphism Cards - Dark Theme */
+            .glass-card-dark {
+                background: rgba(26, 26, 26, 0.6);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border: 1px solid rgba(255, 255, 255, 0.08);
+                border-radius: 24px;
+                box-shadow: 
+                    0 4px 6px -1px rgba(0, 0, 0, 0.3),
+                    0 10px 15px -3px rgba(0, 0, 0, 0.4),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+                transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            .glass-card-dark:hover {
+                transform: translateY(-4px) scale(1.01);
+                border-color: rgba(16, 185, 129, 0.3);
+                box-shadow: 
+                    0 20px 25px -5px rgba(0, 0, 0, 0.5),
+                    0 0 30px rgba(16, 185, 129, 0.1),
+                    inset 0 1px 0 rgba(255, 255, 255, 0.1);
+            }
+            
+            /* Gradient Accent Cards */
+            .gradient-card-green {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                border-radius: 20px;
+                position: relative;
+                overflow: hidden;
+            }
+            
+            .gradient-card-green::before {
+                content: '';
+                position: absolute;
+                top: -50%;
+                right: -50%;
+                width: 200%;
+                height: 200%;
+                background: radial-gradient(circle, rgba(255,255,255,0.2) 0%, transparent 70%);
+                animation: shimmer 3s infinite;
+            }
+            
+            @keyframes shimmer {
+                0% { transform: rotate(0deg); }
+                100% { transform: rotate(360deg); }
+            }
+            
+            /* Modern Buttons - Dark Theme */
+            .btn-glow-green {
+                position: relative;
+                overflow: hidden;
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                font-weight: 600;
+                padding: 0.875rem 2rem;
+                border-radius: 12px;
+                border: none;
+                cursor: pointer;
+                transition: all 0.3s ease;
+                box-shadow: 0 4px 15px rgba(16, 185, 129, 0.4);
+            }
+            
+            .btn-glow-green:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5), 0 0 20px rgba(16, 185, 129, 0.3);
+            }
+            
+            .btn-secondary-dark {
+                background: rgba(255, 255, 255, 0.05);
+                color: #e5e5e5;
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                font-weight: 600;
+                padding: 0.875rem 2rem;
+                border-radius: 12px;
+                transition: all 0.3s ease;
+            }
+            
+            .btn-secondary-dark:hover {
+                background: rgba(255, 255, 255, 0.1);
+                border-color: rgba(16, 185, 129, 0.5);
+                color: #10b981;
+                transform: translateY(-2px);
+            }
+            
+            /* Navigation - Dark Glass */
+            .nav-glass-dark {
+                background: rgba(15, 15, 15, 0.8);
+                backdrop-filter: blur(20px);
+                -webkit-backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+            
+            /* Input Fields - Dark */
+            .input-dark {
+                background: rgba(255, 255, 255, 0.05);
+                border: 1px solid rgba(255, 255, 255, 0.1);
+                border-radius: 12px;
+                padding: 0.875rem 1rem;
+                color: white;
+                transition: all 0.3s ease;
+                font-size: 0.95rem;
+            }
+            
+            .input-dark::placeholder {
+                color: #737373;
+            }
+            
+            .input-dark:focus {
+                outline: none;
+                border-color: #10b981;
+                box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+                background: rgba(255, 255, 255, 0.08);
+            }
+            
+            /* Page Transitions */
+            .page-enter {
+                animation: pageEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            }
+            
+            @keyframes pageEnter {
+                from {
+                    opacity: 0;
+                    transform: translateY(20px) scale(0.98);
+                }
+                to {
+                    opacity: 1;
+                    transform: translateY(0) scale(1);
+                }
+            }
+            
+            /* Stagger Animation */
+            .stagger-item {
+                opacity: 0;
+                transform: translateY(30px);
+                animation: staggerEnter 0.6s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+            }
+            
+            @keyframes staggerEnter {
+                to {
+                    opacity: 1;
+                    transform: translateY(0);
+                }
+            }
+            
+            .stagger-item:nth-child(1) { animation-delay: 0.1s; }
+            .stagger-item:nth-child(2) { animation-delay: 0.2s; }
+            .stagger-item:nth-child(3) { animation-delay: 0.3s; }
+            .stagger-item:nth-child(4) { animation-delay: 0.4s; }
+            
+            /* Balance Display - Dark */
+            .balance-display-dark {
+                font-family: 'Plus Jakarta Sans', sans-serif;
+                font-weight: 800;
+                font-size: 2.5rem;
+                background: linear-gradient(135deg, #ffffff 0%, #10b981 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            /* Transaction Items - Dark */
+            .transaction-item-dark {
+                background: rgba(26, 26, 26, 0.6);
+                border-radius: 16px;
+                padding: 1rem 1.25rem;
+                margin-bottom: 0.75rem;
+                transition: all 0.3s ease;
+                border: 1px solid rgba(255, 255, 255, 0.05);
+                display: flex;
+                align-items: center;
+                justify-content: space-between;
+            }
+            
+            .transaction-item-dark:hover {
+                background: rgba(38, 38, 38, 0.8);
+                border-color: rgba(16, 185, 129, 0.3);
+                transform: translateX(8px);
+            }
+            
+            /* Status Badges - Dark */
+            .badge-success-dark {
+                background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                color: white;
+                padding: 0.375rem 0.875rem;
+                border-radius: 9999px;
+                font-size: 0.75rem;
+                font-weight: 600;
+                box-shadow: 0 4px 10px rgba(16, 185, 129, 0.3);
+            }
+            
+            .badge-pending-dark {
+                background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+                color: white;
+                padding: 0.375rem 0.875rem;
+                border-radius: 9999px;
+                font-size: 0.75rem;
+                font-weight: 600;
+            }
+            
+            /* Scrollbar - Dark */
+            ::-webkit-scrollbar {
+                width: 8px;
+                height: 8px;
+            }
+            
+            ::-webkit-scrollbar-track {
+                background: #1a1a1a;
+                border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb {
+                background: #404040;
+                border-radius: 4px;
+            }
+            
+            ::-webkit-scrollbar-thumb:hover {
+                background: #525252;
+            }
+            
+            /* Loading Skeleton - Dark */
+            .skeleton-dark {
+                background: linear-gradient(90deg, #262626 25%, #404040 50%, #262626 75%);
+                background-size: 200% 100%;
+                animation: skeleton-loading 1.5s infinite;
+                border-radius: 12px;
+            }
+            
+            @keyframes skeleton-loading {
+                0% { background-position: 200% 0; }
+                100% { background-position: -200% 0; }
+            }
+            
+            /* Text Gradients */
+            .text-gradient-green {
+                background: linear-gradient(135deg, #34d399 0%, #10b981 50%, #059669 100%);
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;
+                background-clip: text;
+            }
+            
+            /* Glow Effects */
+            .glow-green {
+                box-shadow: 0 0 20px rgba(16, 185, 129, 0.3);
+            }
+            
+            .glow-green-intense {
+                box-shadow: 0 0 40px rgba(16, 185, 129, 0.4), 0 0 80px rgba(16, 185, 129, 0.2);
+            }
+        </style>
+        
+        {% block head_extra %}{% endblock %}
+    </head>
+    <body>
+        <!-- Animated Background Orbs -->
+        <div class="bg-orb orb-1"></div>
+        <div class="bg-orb orb-2"></div>
+        <div class="bg-orb orb-3"></div>
+        
+        {% block body %}
+            {% include 'core/navbar.html' %}
+            
+            <main class="min-h-screen pt-20 pb-12 px-4 sm:px-6 lg:px-8">
+                <div class="max-w-7xl mx-auto page-enter">
+                    {% include 'core/messages.html' %}
+                    {% block content %}
+                    <!-- Add content here -->
+                    {% endblock %}
+                </div>
+            </main>
+            
+            {% include 'core/footer.html' %}
+            
+            <!-- Initialize Lucide Icons -->
+            <script>
+                lucide.createIcons();
+                
+                // Scroll reveal animation
+                const observerOptions = {
+                    threshold: 0.1,
+                    rootMargin: '0px 0px -50px 0px'
+                };
+                
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('stagger-item');
+                            observer.unobserve(entry.target);
+                        }
+                    });
+                }, observerOptions);
+                
+                document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+                    observer.observe(el);
+                });
+            </script>
+        {% endblock %}
+        
+        {% block footer_extra %}{% endblock %}
+    </body>
+</html>

@@ -1,0 +1,67 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}My Loans | Banking System{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-10">
+    <div class="glass-card-dark p-8 max-w-6xl mx-auto">
+        <div class="flex flex-col md:flex-row justify-between items-center mb-8 pb-6 border-b border-white/10">
+            <div>
+                <h1 class="text-3xl font-display font-bold text-white mb-2">My Loan Records</h1>
+                <p class="text-gray-400">Track and manage your borrowing history.</p>
+            </div>
+            <a href="{% url 'loans:loan_type_selection' %}" class="btn-glow-green flex items-center gap-2 mt-4 md:mt-0">
+                <i data-lucide="plus" class="w-5 h-5"></i>
+                Apply for New Loan
+            </a>
+        </div>
+
+        <div class="overflow-x-auto rounded-2xl border border-white/10">
+            <table class="w-full text-left">
+                <thead class="bg-white/5 text-emerald-400 uppercase text-xs font-bold tracking-widest">
+                    <tr>
+                        <th class="px-6 py-5">Loan Type</th>
+                        <th class="px-6 py-5 text-center">Amount (₹)</th>
+                        <th class="px-6 py-5 text-center">Duration</th>
+                        <th class="px-6 py-5 text-center">Installment (₹)</th>
+                        <th class="px-6 py-5 text-center">Status</th>
+                        <th class="px-6 py-5 text-right">Date Requested</th>
+                    </tr>
+                </thead>
+                <tbody class="divide-y divide-white/5">
+                    {% for loan in loans %}
+                    <tr class="hover:bg-white/5 transition duration-150">
+                        <td class="px-6 py-5">
+                            <div class="font-bold text-white">{{ loan.get_loan_type_display }}</div>
+                            <div class="text-xs text-gray-500">ID: {{ loan.id }}</div>
+                        </td>
+                        <td class="px-6 py-5 text-center text-lg font-bold text-white">₹ {{ loan.amount }}</td>
+                        <td class="px-6 py-5 text-center text-gray-400">{{ loan.duration_months }} Months</td>
+                        <td class="px-6 py-5 text-center font-bold text-emerald-400">₹ {{ loan.monthly_installment }}</td>
+                        <td class="px-6 py-5 text-center">
+                            {% if loan.status == 'APPROVED' %}
+                                <span class="bg-emerald-500/20 text-emerald-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase">Approved</span>
+                            {% elif loan.status == 'PENDING' %}
+                                <span class="bg-amber-500/20 text-amber-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase">Pending</span>
+                            {% elif loan.status == 'REJECTED' %}
+                                <span class="bg-red-500/20 text-red-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase">Rejected</span>
+                            {% else %}
+                                <span class="bg-blue-500/20 text-blue-400 px-4 py-1.5 rounded-full text-xs font-semibold uppercase">{{ loan.status }}</span>
+                            {% endif %}
+                        </td>
+                        <td class="px-6 py-5 text-right text-sm text-gray-500">{{ loan.created_at|date:"d M Y" }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="px-6 py-20 text-center text-gray-500">
+                            <i data-lucide="banknote" class="w-12 h-12 mx-auto mb-4 opacity-30"></i>
+                            <p>You have not applied for any loans yet.</p>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

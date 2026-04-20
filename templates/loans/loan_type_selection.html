@@ -1,0 +1,41 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Select Loan Category | Banking System{% endblock %}
+
+{% block content %}
+<div class="min-h-screen px-4 py-16">
+    <div class="text-center mb-16 page-enter">
+        <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-4">Loan Categories</h1>
+        <p class="text-xl text-gray-400">Select a category to begin your specialized loan application.</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        <a href="{% url 'loans:loan_request' loan_type='student' %}" class="glass-card-dark p-8 text-center group hover:border-emerald-500/30 transition-all duration-300">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-300 text-emerald-400 group-hover:text-white">
+                <i data-lucide="graduation-cap" class="w-10 h-10"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white mb-3">Student Loan</h2>
+            <p class="text-gray-400 mb-6 text-sm">Finance your education with low interest rates and flexible repayment options.</p>
+            <span class="btn-secondary-dark w-full block group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-500">Select Category</span>
+        </a>
+
+        <a href="{% url 'loans:loan_request' loan_type='house' %}" class="glass-card-dark p-8 text-center group hover:border-emerald-500/30 transition-all duration-300">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-300 text-emerald-400 group-hover:text-white">
+                <i data-lucide="home" class="w-10 h-10"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white mb-3">House Loan</h2>
+            <p class="text-gray-400 mb-6 text-sm">Move into your dream home sooner with our specialized mortgage solutions.</p>
+            <span class="btn-secondary-dark w-full block group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-500">Select Category</span>
+        </a>
+
+        <a href="{% url 'loans:loan_request' loan_type='community' %}" class="glass-card-dark p-8 text-center group hover:border-emerald-500/30 transition-all duration-300">
+            <div class="w-20 h-20 bg-emerald-500/10 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:bg-emerald-500 group-hover:scale-110 transition-all duration-300 text-emerald-400 group-hover:text-white">
+                <i data-lucide="users" class="w-10 h-10"></i>
+            </div>
+            <h2 class="text-xl font-bold text-white mb-3">Community</h2>
+            <p class="text-gray-400 mb-6 text-sm">Empowering local projects and community growth with collective financing.</p>
+            <span class="btn-secondary-dark w-full block group-hover:bg-emerald-500 group-hover:text-white group-hover:border-emerald-500">Select Category</span>
+        </a>
+    </div>
+</div>
+{% endblock %}

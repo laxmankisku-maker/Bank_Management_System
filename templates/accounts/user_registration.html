@@ -1,0 +1,167 @@
+{% extends 'core/base.html' %}
+
+{% block head_title %}Open Account | Banking System{% endblock %}
+
+{% block content %}
+<div class="flex items-center justify-center min-h-[80vh] px-4 py-8 page-enter">
+    <div class="glass-card-dark w-full max-w-4xl p-8 relative overflow-hidden">
+        <div class="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-green-500 to-teal-500"></div>
+        
+        <div class="text-center mb-8">
+            <div class="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-gradient-to-br from-emerald-500 to-green-600 mb-4 shadow-lg shadow-emerald-500/30">
+                <i data-lucide="user-plus" class="w-8 h-8 text-white"></i>
+            </div>
+            <h1 class="text-3xl font-display font-bold text-white mb-2">Open New Account</h1>
+            <p class="text-gray-400 text-sm">Complete your KYC and personal details to join our banking network</p>
+        </div>
+        
+        <form method="post" enctype="multipart/form-data" class="space-y-8">
+            {% csrf_token %}
+            
+            {% if registration_form.non_field_errors or address_form.non_field_errors %}
+                <div class="bg-red-500/10 border border-red-500/30 text-red-400 p-4 rounded-xl">
+                    {% for error in registration_form.non_field_errors %}<p class="flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i>{{ error }}</p>{% endfor %}
+                    {% for error in address_form.non_field_errors %}<p class="flex items-center gap-2"><i data-lucide="alert-circle" class="w-4 h-4"></i>{{ error }}</p>{% endfor %}
+                </div>
+            {% endif %}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <!-- Personal Details -->
+                <div class="space-y-5">
+                    <h2 class="text-sm font-semibold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+                        <i data-lucide="user" class="w-4 h-4"></i>
+                        Personal Details & KYC
+                    </h2>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ registration_form.first_name.label }}</label>
+                        {{ registration_form.first_name }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ registration_form.last_name.label }}</label>
+                        {{ registration_form.last_name }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ registration_form.email.label }}</label>
+                        {{ registration_form.email }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ registration_form.phone_number.label }}</label>
+                        {{ registration_form.phone_number }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">{{ registration_form.citizenship_id.label }}</label>
+                        {{ registration_form.citizenship_id }}
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Gender</label>
+                            {{ registration_form.gender }}
+                        </div>
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Birth Date</label>
+                            {{ registration_form.birth_date }}
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Occupation</label>
+                        {{ registration_form.occupation }}
+                    </div>
+                </div>
+
+                <!-- Account & Address -->
+                <div class="space-y-5">
+                    <h2 class="text-sm font-semibold text-emerald-400 uppercase tracking-wider flex items-center gap-2 border-b border-white/10 pb-2">
+                        <i data-lucide="credit-card" class="w-4 h-4"></i>
+                        Account & Address
+                    </h2>
+                    
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Account Type</label>
+                        {{ registration_form.account_type }}
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Street Address</label>
+                        {{ address_form.street_address }}
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">City</label>
+                            {{ address_form.city }}
+                        </div>
+                        <div class="group">
+                            <label class="block text-sm font-medium text-gray-300 mb-2">Postal Code</label>
+                            {{ address_form.postal_code }}
+                        </div>
+                    </div>
+                    <div class="group">
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Country</label>
+                        {{ address_form.country }}
+                    </div>
+
+                    <div class="pt-4 border-t border-white/10">
+                        <h3 class="text-sm font-semibold text-emerald-400 uppercase tracking-wider mb-4 flex items-center gap-2">
+                            <i data-lucide="lock" class="w-4 h-4"></i>
+                            Set Security Password
+                        </h3>
+                        <div class="space-y-4">
+                            <div class="group">
+                                <label class="block text-xs font-medium text-gray-400 uppercase mb-2">New Password</label>
+                                {{ registration_form.password1 }}
+                            </div>
+                            <div class="group">
+                                <label class="block text-xs font-medium text-gray-400 uppercase mb-2">Confirm Password</label>
+                                {{ registration_form.password2 }}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    <!-- DEBUG: Show all form errors -->
+{% if registration_form.errors %}
+    <div class="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-xl mb-4">
+        <h3 class="font-bold mb-2">Registration Errors:</h3>
+        <ul class="text-sm list-disc list-inside">
+            {% for field, errors in registration_form.errors.items %}
+                <li><strong>{{ field }}:</strong> {{ errors.0 }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+{% if address_form.errors %}
+    <div class="bg-red-500/20 border border-red-500 text-red-300 p-4 rounded-xl mb-4">
+        <h3 class="font-bold mb-2">Address Errors:</h3>
+        <ul class="text-sm list-disc list-inside">
+            {% for field, errors in address_form.errors.items %}
+                <li><strong>{{ field }}:</strong> {{ errors.0 }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+{% endif %}
+            <button type="submit" class="btn-glow-green w-full text-xl py-5 flex items-center justify-center gap-3 group">
+                <span>Create My Secure Account</span>
+                <i data-lucide="arrow-right" class="w-5 h-5 group-hover:translate-x-1 transition-transform"></i>
+            </button>
+        </form>
+    </div>
+</div>
+
+<style>
+    input, select {
+        width: 100%;
+        padding: 0.875rem 1rem;
+        border-radius: 0.75rem;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        background: rgba(255, 255, 255, 0.05);
+        color: white;
+        outline: none;
+        transition: all 0.3s ease;
+    }
+    input:focus, select:focus {
+        border-color: #10b981;
+        box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+        background: rgba(255, 255, 255, 0.08);
+    }
+    input::placeholder { color: #737373; }
+</style>
+{% endblock %}
